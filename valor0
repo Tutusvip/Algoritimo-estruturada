@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/* //faca o programa que receba como dado de entrada varios nuemros inteiros e mostre como resultado: A quantas vezes o programa rodou. B qual foi o maior nuemro digitado */
+
+main() {
+	int controle=1, Valor, maior,qtd;
+	system("color f4");
+		while(controle !=0){		
+		printf("Digite um numero");
+		scanf("%d",&valor);
+		if(valor>maior){
+			maior = valor;
+		}
+		qtd++;
+	printf("Digite 1 para continuar \n ou 0 para sair");
+	scanf("%d",&controle);
+	}
+	printf("\nO programa redou %d vezes",qtd);
+	printf("\nO maior numero digitado foi %d",maior);
+	return 0;
+}
