@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "conio2.h"
+
+/* faca um programa que digite na tela entra 1 e 60 cada um com uma cor. */
+
+main() {
+	int i;
+	printf("Gerando 10 valores aleatorios:\n\n");
+	for(i=0; i<999999;i++){
+		gotoxy(rand() % 81,rand() % 24)
+		textcolor(rand() % 12);
+		printf("%d", rand() % 61);
+		//getch();
+	}	
+}
