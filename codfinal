@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "conio2.h"
+
+/* faca um programa que receba como dados de netrada 2 notas de varios alunos e mostre um resultado 
+A qual foi a media obtida 
+B quantos alunos tivera mmedia =+ 7 */
+
+main() {
+	int ctr,qtd7;
+	float n1,n2,md, maior;
+	 while(ctr !=0){
+	 	printf("Digite a nota 1");
+	 	scanf("%f",&n1);
+	 	printf("Digite a nota 2");
+	 	scanf("%f",&n2);
+		 md=(n1+n2)/2;
+		  if(md > maior){
+		  	maior=md;
+		  }	
+		  if(md <=7){
+		  	qtd7++;
+		  }
+		  printf("\n Digite 1 para continuar ou 0 para sair");
+		  system("cls");
+	 }
+	printf("\n A maior media foi %0.2f", maior);
+	printf("\n %d foi a quantidade de Aprovados",qtd7);
+
+	}	
+}
