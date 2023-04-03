@@ -1,0 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+main(){
+	int controle=1, Valor;
+		while(controle !=0){		
+		printf("Digite um numero");
+		scanf("%d",&valor);
+		
+	printf("Digite 1 para continuar \n ou 0 para sair");
+	scanf("%d",&controle);
+	}
+}
