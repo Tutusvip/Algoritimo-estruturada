@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "conio2.h"
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+main() {
+	int i;
+	printf("Gerando 10 valores aleatorios:\n\n");
+	for(i=0; i < 999999; i++){
+		gotoxy(rand() % 81,rand() % 24);
+		textcolor(i+1);
+		printf("%d", rand() % 61);
+		//getch();
+	}	
+}
