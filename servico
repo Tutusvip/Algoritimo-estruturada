@@ -1,0 +1,7 @@
+float desconto(float v){
+	float r;
+	r=v-(v*0.1);
+	textcolor(11);
+	printf("Valor com desconto: %.02f",r);
+	return r;
+}
