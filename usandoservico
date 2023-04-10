@@ -1,0 +1,12 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "servico.h"
+#include "conio2.h"
+
+main(){
+	float valor;
+	printf("Digite o Valor do seriico");
+	scanf("%f",&valor);
+	desconto(valor);
+	
+}
