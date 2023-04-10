@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "conio2.h"
+#include "toto.h"
 
-main(){
-	int controle=1, Valor;
-		while(controle !=0){		
-		printf("Digite um numero");
-		scanf("%d",&valor);
-		
-	printf("Digite 1 para continuar \n ou 0 para sair");
-	scanf("%d",&controle);
-	}
+int main(){
+	
+	int v1,v2;
+	textcolor(2);
+	printf("Digite o valor 1");scanf("%d",&v1);
+	printf("Digite o valor 2");scanf("%d",&v2);
+	textcolor(11);
+	return 0;
 }
