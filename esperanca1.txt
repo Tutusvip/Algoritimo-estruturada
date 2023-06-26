@@ -90,8 +90,8 @@ void ImprimeTodasAsPessoas(Pessoa povo[], int qtdPessoas)
 {
     system(CLEAR_SCREEN);
     printf("Nomes e alturas:\n");
-    
-	for (int i = 0; i < qtdPessoas; i++) {
+    int i;
+	for (i = 0; i < qtdPessoas; i++) {
         printf("Nome: %s\n", povo[i].nome);
         printf("Altura: %.2f\n\n", povo[i].altura);
     }
@@ -110,8 +110,8 @@ void ImprimeMaisVelhos(Pessoa povo[], int qtdPessoas, Data dia)
 {
     system(CLEAR_SCREEN);
     printf("Pessoas que nasceram antes de %02d/%02d/%04d:\n", dia.dia, dia.mes, dia.ano);
-
-    for (int i = 0; i < qtdPessoas; i++) {
+	int i;
+    for (i = 0; i < qtdPessoas; i++) {
         if (povo[i].nascimento.ano < dia.ano ||
             (povo[i].nascimento.ano == dia.ano && povo[i].nascimento.mes < dia.mes) ||
             (povo[i].nascimento.ano == dia.ano && povo[i].nascimento.mes == dia.mes && povo[i].nascimento.dia < dia.dia)) {
