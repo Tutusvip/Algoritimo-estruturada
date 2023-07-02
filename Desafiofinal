@@ -1,0 +1,339 @@
+(esperança)
+Atividade Proposta(Incompleto)
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#ifdef _WIN32
+#define CLEAR_SCREEN "cls"
+#else
+#define CLEAR_SCREEN "clear"
+#endif
+
+// Declaração da estrutura do tipo Data
+typedef struct {
+    int dia, mes, ano;
+} Data;
+
+// Declaração da estrutura do tipo Pessoa
+typedef struct {
+    char nome[30];
+    float altura;
+    Data nascimento;
+} Pessoa;
+
+// Protótipo das funções
+void criaData(Data* D); // Função para criar datas
+void ImprimeTelaDeOpcoes(); // Função para imprimir na tela as opções de escolha
+int EscolheOpcao(); // Função para ler da tela a opção escolhida pelo usuário
+void LePessoaDeTeclado(Pessoa* p); // Função para ler as pessoas da tela
+void AdicionaPessoa(Pessoa povo[], Pessoa p, int* qtdPessoas); // Função para adicionar os dados de uma pessoa
+void ImprimeTodasAsPessoas(Pessoa povo[], int qtdPessoas); // Função para imprimir na tela todos os dados
+void LeDataDeTeclado(Data* dia); // Função para ler a data da tela
+void ImprimeMaisVelhas(Pessoa povo[], int qtdPessoas, Data dia); // Função para imprimir na tela as pessoas mais velhas
+
+// Definição das funções
+
+// Função para criar datas
+void criaData(Data* D)
+{
+    D->mes = 1 + (rand() % 12);
+    D->ano = 1950 + (rand() % 49);
+    D->dia = 1 + (rand() % 30);
+}
+
+// Função para imprimir na tela as opções de escolha
+void ImprimeTelaDeOpcoes()
+{
+    system(CLEAR_SCREEN);
+    printf("Escolha uma opcao:\n");
+    printf("1 - Inserir nome\n");
+    printf("2 - Listar nomes e alturas\n");
+    printf("3 - Listar nomes das pessoas que nasceram antes de uma certa data\n");
+    printf("4 - Sair\n");
+}
+
+// Função para ler da tela a opção escolhida pelo usuário
+int EscolheOpcao()
+{
+    int opcao;
+    printf("\nOpcao: ");
+    scanf("%d", &opcao);
+    return opcao;
+}
+
+// Função para ler as pessoas da tela
+void LePessoaDeTeclado(Pessoa* p)
+{
+    printf("Nome: ");
+    scanf("%s", p->nome);
+    printf("Altura: ");
+    scanf("%f", &(p->altura));
+    printf("Data de nascimento (dia mes ano): ");
+    scanf("%d %d %d", &(p->nascimento.dia), &(p->nascimento.mes), &(p->nascimento.ano));
+}
+
+// Função para adicionar os dados de uma pessoa
+void AdicionaPessoa(Pessoa povo[], Pessoa p, int* qtdPessoas)
+{
+    if (*qtdPessoas < 10) {
+        povo[*qtdPessoas] = p;
+        (*qtdPessoas)++;
+        printf("Pessoa adicionada com sucesso!\n\n");
+    } else {
+        printf("Limite de pessoas atingido!\n\n");
+    }
+}
+
+// Função para imprimir na tela todos os dados
+void ImprimeTodasAsPessoas(Pessoa povo[], int qtdPessoas)
+{
+    system(CLEAR_SCREEN);
+    printf("Nomes e alturas:\n");
+    int i;
+    for (i = 0; i < qtdPessoas; i++) {
+        printf("Nome: %s\n", povo[i].nome);
+        printf("Altura: %.2f\n\n", povo[i].altura);
+    }
+    system("pause");
+}
+
+// Função para ler a data da tela
+void LeDataDeTeclado(Data* dia)
+{
+    printf("Digite a data (dia mes ano): ");
+    scanf("%d %d %d", &(dia->dia), &(dia->mes), &(dia->ano));
+}
+
+// Função para imprimir na tela as pessoas mais velhas
+void ImprimeMaisVelhos(Pessoa povo[], int qtdPessoas, Data dia)
+{
+    system(CLEAR_SCREEN);
+    printf("Pessoas que nasceram antes de %02d/%02d/%04d:\n", dia.dia, dia.mes, dia.ano);
+    int i;
+    for (i = 0; i < qtdPessoas; i++) {
+        if (povo[i].nascimento.ano < dia.ano ||
+            (povo[i].nascimento.ano == dia.ano && povo[i].nascimento.mes < dia.mes) ||
+            (povo[i].nascimento.ano == dia.ano && povo[i].nascimento.mes == dia.mes && povo[i].nascimento.dia < dia.dia)) {
+            printf("%s\n", povo[i].nome);
+        }
+    }
+    printf("\n");
+    system("pause");
+}
+
+int main()
+{
+    Pessoa povo[10];
+    Pessoa p;
+    int opcao, qtdPessoas = 0;
+    Data dia;
+
+    srand(time(NULL));
+
+    do {
+        ImprimeTelaDeOpcoes();
+        opcao = EscolheOpcao();
+        if (opcao == 1) {
+            LePessoaDeTeclado(&p);
+            AdicionaPessoa(povo, p, &qtdPessoas);
+        }
+        if (opcao == 2) {
+            ImprimeTodasAsPessoas(povo, qtdPessoas);
+        }
+        if (opcao == 3) {
+            LeDataDeTeclado(&dia);
+            ImprimeMaisVelhos(povo, qtdPessoas, dia);
+        }
+    } while (opcao != 4);
+
+    return 0;
+}
+
+LISTA 1
+Atividade 1
+/* A prefeitura de uma cidade fez uma pesquisa entre seus habitantes,
+coletando dados sobre o salário e o numero de filhos. A prefeitura deseja saber:
+a) Média salarial da popula??o;
+b) Média do numero de filhos
+c) Maior Salário;
+d) Percentual de pessoas com salário até R$ 100,00 
+Obs: O final da leitra de daso se dará com a entrada de um salário negativo */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+
+int main() {
+    float salario, mediaSalario, maiorSalario = 0, somaSalario = 0, percentCem;
+    int numFilho, mediaFilho, vezes = 0, somaFilho = 0, vezesSalarioCem = 0;
+    setlocale(LC_ALL, "Portuguese");
+
+    do {
+        printf("Digite o salário recebido: ");
+        scanf("%f", &salario);
+        if (salario <= 0 || vezes >= 10) {
+            break;
+        }
+        printf("Informe o número de filhos: ");
+        scanf("%d", &numFilho);
+        vezes++;
+        somaSalario += salario;
+        mediaSalario = somaSalario / vezes;
+        somaFilho += numFilho;
+        mediaFilho = somaFilho / vezes;
+        if (salario > maiorSalario) {
+            maiorSalario = salario;
+        }
+        if (salario <= 100) {
+            vezesSalarioCem++;
+        }
+        percentCem = vezesSalarioCem * 100.0 / vezes;
+    } while (salario > 0 && vezes < 10);
+
+    printf("A média do salário da população é de: R$%.2f", mediaSalario);
+    printf("\nMédia do número de filhos é de: %d", mediaFilho);
+    printf("\nMaior salário é de: R$%.2f", maiorSalario);
+    printf("\nO percentual de pessoas com o salário até R$ 100,00 é de: %.1f%%", percentCem);
+
+    return 0;
+}
+
+Atividade 2
+/* Chico tem 1,50 metros e cresce 2 centímetros por ano, enquanto Zé tem 1,10 metros
+e cresce 3 centímetros por ano. Faça um programa em C que recebendo a altura e o 
+crescimento anual de duas pessoas calcule e imprima quantos anos serão necessário para
+que a mais baixa seja maior que a outra. Caso isto não ocorra em 100 anos informar
+mensagem de impossibilidade.
+Obs: Encerre a entrada de dados quando for digitada uma valor negativo (não usar
+vetores ou matizes) */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+
+main() {
+	int ano, cont=1;
+	float m, cresce, m2, cresce2, aumento=0, aumento2=0;
+	setlocale(LC_ALL, "Portuguese");
+	
+	while(cont!=0){
+		printf("Digite o maior tamanho em metros: ");
+		scanf("%f", &m);
+		printf("Informe o valor acrescentado por ano: ");
+		scanf("%f", &cresce);
+		printf("Digite o menor tamanho em metros: ");
+		scanf("%f", &m2);
+		printf("Informe o valor acrescentado por ano: ");
+		scanf("%f", &cresce2);
+	
+		while(m>m2){
+			m= m + cresce;
+			m2= m2 + cresce2;
+			ano++;
+			if(ano>100){
+				printf("A menor pessoa ficar mais alta que a maior pessoa é impossível!");
+				break;
+			}
+		}
+		printf("O número de anos necessários é de: %d", ano);
+		m=0;
+		m2=0;
+		ano=0;
+		printf("\nDeseja calcular novamente? Sim [1], Não [0]: ");
+		scanf("%d", &cont);
+	}	
+}
+Atividade 3
+/* 3 . Elabore um programa que faça o sorteio de vários números e ao final mostra:
+a) A quantidade de números sorteados;
+b) O Maior numero sorteado;
+c) Quantos números pares foram sorteados;
+Observação: O programa deve finalizar quando for sorteado o valor 0 (zero)e utilizar no
+máximo 3 variáveis não utilizar vetores ou matrizes. */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "conio2.h"
+
+
+int main() {
+	int x=1, mNumero=0, contPares=0, cont=0;
+	
+	printf("Sorteando vários numeros inteiros: \n");
+	while(x!=0){
+		x=rand() %100;
+		printf("%d ",x);
+		Sleep(1);
+
+	cont++;
+	if(mNumero<x){
+		mNumero=x;
+	}
+	if(x%2==0){
+		contPares++;
+	}
+	}
+	printf("\nA quantidade de numeros sorteados: %d\n",cont);
+	printf("O Maior numero sorteado: %d\n",mNumero);
+	printf("quantidade de numeros pares sorteados: %d",contPares);
+	getchar();
+	
+	return 0;
+}
+Atividade 4
+/* 
+4. Elabore um programa que receba omo dados de entrada duas notas de vários alunos
+e ao final mostra:
+a) A quantidade de alunos com media maior ou igual a 7,0;
+b) A Menor media da Turma;
+c) A Media geral da turma;
+d) Quantas vezes o programa rodou;
+Observação: O programa deve finalizar quando for digitado o valor 0 (zero) e utilizar no
+máximo 6 variáveis não utilizar vetores ou matrizes.
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+
+
+int main() {
+	setlocale(LC_ALL, "portuguese");
+	system("color f0");
+	float nota1=1, totMedia=0, media=0, acimaMedia=0, menorMedia=999999, contador=0;
+	
+	while(nota1!=0){
+		printf("Digite a primeira nota ou digite [0] para encerrar:  ");
+		scanf("%f",&nota1);
+		if(nota1!=0){
+			printf("Digite a segunda nota: ");
+			scanf("%f",&media);
+		
+			system("cls");
+			
+			media=(media+nota1)/2;
+			totMedia+=media;
+				
+			if(media>=7){
+				acimaMedia++;
+			}
+		
+			if(menorMedia>media){
+				menorMedia=media;
+			}
+			
+			contador++;
+		}
+	}
+	system("cls");
+	printf("O total de alunos com a media maior ou igual a 7,0 é de: %.0f\n",acimaMedia);
+	printf("A menor média da turma foi de: %.2f\n",menorMedia);
+	printf("A média geral da turma foi de: %.2f\n",totMedia/contador);
+	printf("O programa rodou %.0f vezes",contador);
+	
+	getchar();
+	
+	return 0;
+}
