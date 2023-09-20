@@ -1,0 +1,447 @@
+Lista 2
+
+Questão 1
+
+#include <stdio.h>
+
+void bubbleSort(int arr[], int n) {
+    int temp;
+    int swapped;
+
+    for (int i = 0; i < n - 1; i++) {
+        swapped = 0; // Inicializa uma variável para verificar se houve trocas durante esta passagem
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // Troca os elementos se estiverem fora de ordem
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                swapped = 1; // Marca que houve uma troca nesta passagem
+            }
+        }
+        // Se não houve trocas durante esta passagem, o array está ordenado
+        if (swapped == 0) {
+            break;
+        }
+    }
+}
+
+int main() {
+    int n;
+
+    printf("Digite o tamanho do array: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    printf("Digite os elementos do array:\n");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    bubbleSort(arr, n);
+
+    printf("Array ordenado:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
+
+Questão 2
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// Função para trocar dois elementos em um array
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Função para imprimir um array
+void printArray(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+// Função para implementar o algoritmo de ordenação por bolha
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(&arr[j], &arr[j + 1]);
+            }
+        }
+    }
+}
+
+// Função de particionamento para o quicksort
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+
+// Função para implementar o algoritmo quicksort
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+// Função para realizar o merge de dois subarrays
+void merge(int arr[], int l, int m, int r) {
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+
+    int L[n1], R[n2];
+
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = l;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+// Função para implementar o algoritmo mergesort
+void mergeSort(int arr[], int l, int r) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+
+        merge(arr, l, m, r);
+    }
+}
+
+int main() {
+    int n;
+    clock_t start, end;
+    double cpu_time_used;
+
+    printf("Digite o tamanho do array: ");
+    scanf("%d", &n);
+
+    int *arr = (int *)malloc(n * sizeof(int));
+
+    // Preenche o array com valores aleatórios
+    for (int i = 0; i < n; i++) {
+        arr[i] = rand();
+    }
+
+    // Mede o tempo de execução para o algoritmo de ordenação por bolha
+    start = clock();
+    bubbleSort(arr, n);
+    end = clock();
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Tempo de execucao para Bubble Sort: %f segundos\n", cpu_time_used);
+
+    // Recria o array com valores aleatórios
+    for (int i = 0; i < n; i++) {
+        arr[i] = rand();
+    }
+
+    // Mede o tempo de execução para o algoritmo quicksort
+    start = clock();
+    quickSort(arr, 0, n - 1);
+    end = clock();
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Tempo de execucao para Quick Sort: %f segundos\n", cpu_time_used);
+
+    // Recria o array com valores aleatórios
+    for (int i = 0; i < n; i++) {
+        arr[i] = rand();
+    }
+
+    // Mede o tempo de execução para o algoritmo mergesort
+    start = clock();
+    mergeSort(arr, 0, n - 1);
+    end = clock();
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Tempo de execucao para Merge Sort: %f segundos\n", cpu_time_used);
+
+    free(arr);
+    return 0;
+}
+
+
+
+Questão 3
+#include <stdio.h>
+
+void insertionSortDescending(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+
+        // Mova os elementos maiores do que a chave para a direita
+        while (j >= 0 && arr[j] < key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+
+        arr[j + 1] = key;
+    }
+}
+
+int main() {
+    int n;
+
+    printf("Digite o tamanho do array: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    printf("Digite os elementos do array:\n");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    insertionSortDescending(arr, n);
+
+    printf("Array ordenado em ordem decrescente:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
+
+Questão 4
+
+#include <stdio.h>
+
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+int main() {
+    int rows, cols;
+
+    printf("Digite o número de linhas e colunas da matriz: ");
+    scanf("%d %d", &rows, &cols);
+
+    int matrix[rows][cols];
+
+    printf("Digite os elementos da matriz:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+
+    // Convertendo a matriz bidimensional em um array unidimensional
+    int total_elements = rows * cols;
+    int arr[total_elements];
+    int index = 0;
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            arr[index++] = matrix[i][j];
+        }
+    }
+
+    // Aplicando o algoritmo Quick Sort para ordenar o array
+    quickSort(arr, 0, total_elements - 1);
+
+    // Colocando os elementos ordenados de volta na matriz bidimensional
+    index = 0;
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            matrix[i][j] = arr[index++];
+        }
+    }
+
+    // Imprimindo a matriz ordenada
+    printf("Matriz ordenada:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+
+Questão 5
+
+#include <stdio.h>
+
+void insertionSort(int arr[], int n) {
+    int i, key, j;
+    for (i = 1; i < n; i++) {
+        key = arr[i];
+        j = i - 1;
+
+        // Move os elementos do arr[0..i-1] que são maiores que key
+        // para uma posição à frente de sua posição atual
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+int main() {
+    int rows, cols;
+
+    printf("Digite o número de linhas e colunas da matriz: ");
+    scanf("%d %d", &rows, &cols);
+
+    int matrix[rows][cols];
+
+    printf("Digite os elementos da matriz:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+
+    // Aplicando o algoritmo de ordenação por inserção para cada linha da matriz
+    for (int i = 0; i < rows; i++) {
+        insertionSort(matrix[i], cols);
+    }
+
+    // Imprimindo a matriz ordenada
+    printf("Matriz ordenada:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+
+Questão 6
+
+#include <stdio.h>
+
+// Função para realizar uma busca sequencial em uma matriz bidimensional
+// e retornar a posição da primeira ocorrência do valor ou -1 se não encontrado.
+void buscaSequencialMatriz(int matriz[][100], int linhas, int colunas, int valor, int *posicaoLinha, int *posicaoColuna) {
+    int encontrado = 0; // Flag para indicar se o valor foi encontrado
+
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            if (matriz[i][j] == valor) {
+                // Valor encontrado, armazena a posição e sai do loop
+                *posicaoLinha = i;
+                *posicaoColuna = j;
+                encontrado = 1;
+                break;
+            }
+        }
+        if (encontrado) {
+            break; // Sai do loop externo se o valor for encontrado
+        }
+    }
+
+    if (encontrado) {
+        printf("O valor %d foi encontrado na posição (%d, %d).\n", valor, *posicaoLinha, *posicaoColuna);
+    } else {
+        printf("O valor %d não foi encontrado na matriz.\n", valor);
+        *posicaoLinha = -1; // Define -1 para indicar que o valor não foi encontrado
+        *posicaoColuna = -1;
+    }
+}
+
+int main() {
+    int linhas, colunas, valor, posicaoLinha, posicaoColuna;
+
+    printf("Digite o número de linhas da matriz: ");
+    scanf("%d", &linhas);
+
+    printf("Digite o número de colunas da matriz: ");
+    scanf("%d", &colunas);
+
+    int matriz[100][100];
+
+    printf("Digite os elementos da matriz:\n");
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            scanf("%d", &matriz[i][j]);
+        }
+    }
+
+    printf("Digite o valor a ser procurado na matriz: ");
+    scanf("%d", &valor);
+
+    buscaSequencialMatriz(matriz, linhas, colunas, valor, &posicaoLinha, &posicaoColuna);
+
+    return 0;
+}
